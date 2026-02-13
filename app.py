@@ -1,20 +1,13 @@
 import streamlit as st
 import numpy as np
-import pickle
-import pandas as pd
-
-# Load trained symbolic regression model
-with open("sr_bundle_energy_heating.pkl", "rb") as f:
-    obj = pickle.load(f)
-
-sr_model = obj["model"]
 
 st.title("🏠 Energy Efficiency Simulation")
 st.subheader("Symbolic Regression-Based Heating Load Prediction")
 
 st.markdown("Adjust building parameters to simulate heating load.")
 
-# Sliders for input features
+# Input sliders (must match feature order used in training)
+
 relative_compactness = st.slider("Relative Compactness", 0.6, 1.0, 0.8)
 surface_area = st.slider("Surface Area", 500.0, 900.0, 700.0)
 wall_area = st.slider("Wall Area", 200.0, 400.0, 300.0)
@@ -24,30 +17,28 @@ orientation = st.slider("Orientation", 2.0, 5.0, 3.0)
 glazing_area = st.slider("Glazing Area", 0.0, 0.4, 0.2)
 glazing_distribution = st.slider("Glazing Area Distribution", 0.0, 5.0, 2.0)
 
-# Prepare input for model (IMPORTANT: must scale same way as training)
-input_values = [
+# Put all inputs into array (IMPORTANT: same order as training)
+input_data = np.array([[ 
     relative_compactness,
     surface_area,
     wall_area,
     roof_area,
     height,
     orientation,
-    glazing_area,
+    glazing_area,          # x6
     glazing_distribution
-]
+]])
 
-input_data = pd.DataFrame([input_values])
+# --------------------------------------------
+# Symbolic Regression Equation (Pure NumPy)
+# Heating Load = 3.3015666 - 0.30122823*x6**4
+# --------------------------------------------
 
-# Match exactly what model expects
-input_data = input_data.iloc[:, :len(sr_model.feature_names_in_)]
-input_data.columns = sr_model.feature_names_in_
+x6 = input_data[:, 6]
 
+heating_load = 3.3015666 - 0.30122823 * (x6 ** 4)
 
+st.success(f"🔥 Predicted Heating Load: {heating_load[0]:.4f}")
 
-# If you used scaling during training, you must load scaler and apply it here.
-# For now, assuming X_train was already scaled and sr_model expects scaled input.
-
-# Predict
-prediction = sr_model.predict(input_data)
-
-st.success(f" Predicted Heating Load: {prediction[0]:.2f}")
+st.markdown("### 📐 Discovered Equation")
+st.code("Heating Load = 3.3015666 - 0.30122823 * (Glazing Area)^4")
