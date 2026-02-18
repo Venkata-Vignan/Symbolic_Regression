@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 
-st.title("🏠 Energy Efficiency Simulation")
+st.title("Energy Efficiency Simulation")
 st.subheader("Symbolic Regression-Based Heating Load Prediction")
 
 st.markdown("Adjust building parameters to simulate heating load.")
@@ -29,16 +29,88 @@ input_data = np.array([[
     glazing_distribution
 ]])
 
+
 # --------------------------------------------
-# Symbolic Regression Equation (Pure NumPy)
-# Heating Load = 3.3015666 - 0.30122823*x6**4
+# Symbolic Regression Equation
+# Heating Load = 3.090366 * sqrt(1 - 0.104708072692815 * x6^4)
 # --------------------------------------------
 
 x6 = input_data[:, 6]
 
-heating_load = 3.3015666 - 0.30122823 * (x6 ** 4)
+heating_load = 3.090366 * np.sqrt(
+    np.maximum(0, 1 - 0.104708072692815 * (x6 ** 4))
+)
 
-st.success(f"🔥 Predicted Heating Load: {heating_load[0]:.4f}")
 
-st.markdown("### 📐 Discovered Equation")
+st.success(f"Predicted Heating Load: {heating_load[0]:.4f}")
+
+st.markdown("Discovered Equation")
 st.code("Heating Load = 3.3015666 - 0.30122823 * (Glazing Area)^4")
+
+
+st.markdown("Live Response Curve (Glazing Area Effect)")
+
+x_vals = np.linspace(0, 0.4, 100)
+y_vals = 3.090366 * np.sqrt(
+    np.maximum(0, 1 - 0.104708072692815 * (x_vals ** 4))
+)
+
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot(x_vals, y_vals)
+ax.set_xlabel("Glazing Area")
+ax.set_ylabel("Heating Load")
+ax.set_title("Heating Load vs Glazing Area")
+
+st.pyplot(fig)
+
+st.markdown("### 🏔 3D Surface Visualization")
+
+import plotly.graph_objects as go
+
+x_range = np.linspace(0, 0.4, 50)
+y_range = np.linspace(0, 1, 50)
+
+X, Y = np.meshgrid(x_range, y_range)
+Z = 3.090366 * np.sqrt(
+    np.maximum(0, 1 - 0.104708072692815 * (X ** 4))
+)
+
+fig = go.Figure(data=[go.Surface(z=Z, x=X, y=Y)])
+fig.update_layout(
+    scene=dict(
+        xaxis_title='Glazing Area',
+        yaxis_title='Dummy Variable',
+        zaxis_title='Heating Load'
+    ),
+    height=600
+)
+
+st.plotly_chart(fig)
+
+# Example dummy linear model
+linear_pred = 2.8 - 0.2 * x6
+
+st.markdown("### ⚖ Model Comparison")
+
+st.write("Symbolic Prediction:", heating_load[0])
+st.write("Linear Approximation:", linear_pred[0])
+
+
+st.markdown("### 🎯 Optimize Glazing Area")
+
+best_x6 = np.linspace(0, 0.4, 1000)
+best_y = 3.090366 * np.sqrt(
+    np.maximum(0, 1 - 0.104708072692815 * (best_x6 ** 4))
+)
+
+optimal_index = np.argmin(best_y)
+
+st.success(
+    f"Optimal Glazing Area: {best_x6[optimal_index]:.4f}\n"
+    f"Minimum Heating Load: {best_y[optimal_index]:.4f}"
+)
+
+
+
