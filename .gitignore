@@ -1,2 +1,8 @@
-venv
-_pycache_
+venv/
+.vscode/
+.julia_depot/
+__pycache__/
+*.pyc
+
+outputs/
+artifacts/hall_of_fame_archive/
