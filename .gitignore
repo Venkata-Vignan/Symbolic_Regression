@@ -3,6 +3,8 @@ venv/
 .julia_depot/
 __pycache__/
 *.pyc
-
+*.jpg
+*.png
+*.pdf
 outputs/
 artifacts/hall_of_fame_archive/
