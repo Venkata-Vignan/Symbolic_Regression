@@ -27,7 +27,12 @@ from symbolic_predictor import (
 SOURCE_MODEL_PATH = PROJECT_ROOT / "sr_model_energy_heating.pkl"
 OUTPUT_BUNDLE_PATH = PROJECT_ROOT / "sr_bundle_energy_heating.pkl"
 DATA_HOME = Path.home() / "scikit_learn_data"
-LEGACY_SYMBOLIC_METRICS = {"R2": 0.9774, "RMSE": 1.5332, "MAE": 1.1317, "Complexity": 18}
+LEGACY_SYMBOLIC_METRICS = {
+    "R2": 0.9707777473317559,
+    "RMSE": 1.7452523600481433,
+    "MAE": 1.31030150996022,
+    "Complexity": 15,
+}
 
 
 def compute_metrics(y_true, y_pred):
@@ -113,6 +118,10 @@ def main():
             symbolic_complexity = best.get("complexity")
             if symbolic_complexity is not None:
                 metrics["Symbolic Regression"]["Complexity"] = int(symbolic_complexity)
+                symbolic_metadata = SymbolicMetadata(
+                    complexity=int(symbolic_complexity),
+                    backend="pysr_model",
+                )
             latex_value = best.get("latex_format")
             if latex_value is not None:
                 symbolic_latex = str(latex_value)

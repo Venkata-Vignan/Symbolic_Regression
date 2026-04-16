@@ -13,7 +13,10 @@ from symbolic_predictor import (
 )
 
 
-st.set_page_config(page_title="Energy Efficiency Modeling Framework", layout="wide")
+st.set_page_config(
+    page_title="Symbolic Regression for Energy Efficiency Prediction: A Comparative Analysis with Traditional Machine Learning Models",
+    layout="wide",
+)
 
 
 BUNDLE_PATH = Path("sr_bundle_energy_heating.pkl")
@@ -175,120 +178,110 @@ def inject_app_styles():
         """
         <style>
         .stApp {
-            background:
-                radial-gradient(circle at top left, rgba(231,111,81,0.20), transparent 30%),
-                radial-gradient(circle at top right, rgba(42,157,143,0.16), transparent 26%),
-                linear-gradient(180deg, #08141b 0%, #0d1b24 55%, #132733 100%);
+            background: linear-gradient(180deg, #0b141b 0%, #101b24 100%);
             color: #e6edf3;
         }
         .block-container {
-            padding-top: 2rem;
+            padding-top: 1.35rem;
             padding-bottom: 2rem;
-            max-width: 1200px;
+            max-width: 1180px;
         }
         .hero-shell {
-            background: linear-gradient(135deg, #10212c 0%, #163241 55%, #1d5d61 100%);
+            background: rgba(14, 26, 35, 0.96);
             color: #f8fafc;
-            border-radius: 24px;
-            padding: 2rem 2.2rem;
-            box-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
-            margin-bottom: 1.25rem;
-            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 1.35rem 1.5rem;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+            margin-bottom: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.06);
         }
         .hero-kicker {
             text-transform: uppercase;
-            letter-spacing: 0.18em;
-            font-size: 0.75rem;
-            opacity: 0.75;
-            margin-bottom: 0.6rem;
+            letter-spacing: 0.12em;
+            font-size: 0.72rem;
+            opacity: 0.68;
+            margin-bottom: 0.35rem;
         }
         .hero-title {
-            font-size: 2.3rem;
+            font-size: 1.85rem;
             font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-        }
-        .hero-subtitle {
-            font-size: 1rem;
-            line-height: 1.7;
-            max-width: 780px;
-            opacity: 0.9;
+            line-height: 1.2;
+            margin-bottom: 0;
         }
         .mini-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 0.9rem;
-            margin: 1rem 0 1.25rem 0;
+            gap: 0.7rem;
+            margin: 0.8rem 0 1rem 0;
         }
         .mini-card {
-            background: rgba(12, 27, 36, 0.88);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px;
-            padding: 1rem 1rem 0.9rem 1rem;
-            box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+            background: rgba(16, 30, 40, 0.94);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 0.85rem 0.9rem 0.8rem 0.9rem;
+            box-shadow: none;
         }
         .mini-label {
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             color: #9fb3c8;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.25rem;
         }
         .mini-value {
-            font-size: 1.55rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: #f8fafc;
             margin-bottom: 0.2rem;
         }
         .mini-note {
             color: #bfd1e0;
-            font-size: 0.88rem;
-            line-height: 1.4;
+            font-size: 0.83rem;
+            line-height: 1.35;
         }
         .section-banner {
-            background: rgba(12, 27, 36, 0.82);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-left: 6px solid #e76f51;
-            border-radius: 16px;
-            padding: 1rem 1.1rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.22);
-            margin: 0.3rem 0 1rem 0;
+            background: rgba(14, 26, 35, 0.92);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 0.85rem 1rem;
+            box-shadow: none;
+            margin: 0.2rem 0 0.8rem 0;
         }
         .section-title {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #f4f7fb;
             margin-bottom: 0.2rem;
         }
         .section-copy {
             color: #bfd1e0;
-            font-size: 0.95rem;
-            line-height: 1.55;
+            font-size: 0.9rem;
+            line-height: 1.45;
             margin: 0;
         }
         .stTabs [data-baseweb="tab-list"] {
-            gap: 0.5rem;
+            gap: 0.35rem;
         }
         .stTabs [data-baseweb="tab"] {
-            background: rgba(15, 31, 41, 0.9);
-            border-radius: 999px;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(15, 31, 41, 0.92);
+            border-radius: 10px;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid rgba(255,255,255,0.06);
             color: #d9e5ef;
         }
         .stTabs [aria-selected="true"] {
-            background: #e76f51 !important;
+            background: #1f5f7a !important;
             color: #ffffff !important;
         }
         div[data-testid="stMetric"] {
-            background: rgba(12, 27, 36, 0.88);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px;
+            background: rgba(16, 30, 40, 0.94);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
             padding: 0.7rem 0.9rem;
-            box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+            box-shadow: none;
         }
         div[data-testid="stDataFrame"], div[data-testid="stPlotlyChart"], div[data-testid="stAlert"] {
-            border-radius: 18px;
+            border-radius: 14px;
             overflow: hidden;
         }
         div[data-baseweb="select"] > div,
@@ -297,8 +290,8 @@ def inject_app_styles():
             color: #e6edf3;
         }
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #0c1820 0%, #122430 100%);
-            border-right: 1px solid rgba(255,255,255,0.08);
+            background: #0d1820;
+            border-right: 1px solid rgba(255,255,255,0.06);
         }
         [data-testid="stSidebar"] * {
             color: #e6edf3;
@@ -311,7 +304,7 @@ def inject_app_styles():
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
             .hero-title {
-                font-size: 1.8rem;
+                font-size: 1.45rem;
             }
         }
         </style>
@@ -331,12 +324,8 @@ def render_hero(bundle, traditional_results, symbolic_results):
     st.markdown(
         f"""
         <div class="hero-shell">
-            <div class="hero-kicker">Interpretable Energy Modeling Demo</div>
-            <div class="hero-title">Symbolic Regression as the Interpretability Anchor</div>
-            <div class="hero-subtitle">
-                A presentation-ready dashboard that contrasts black-box and coefficient-driven baselines with a symbolic model
-                that is easier to explain, easier to visualize, and easier to connect back to the physical design variables.
-            </div>
+            <div class="hero-kicker">Project Dashboard</div>
+            <div class="hero-title">Symbolic Regression for Energy Efficiency Prediction: A Comparative Analysis with Traditional Machine Learning Models</div>
         </div>
         <div class="mini-grid">
             <div class="mini-card">
@@ -364,8 +353,7 @@ def render_hero(bundle, traditional_results, symbolic_results):
         unsafe_allow_html=True,
     )
     st.info(
-        f"Symbolic regression is highlighted throughout this app because it offers the clearest interpretability story. "
-        f"The current symbolic backend is `{backend}`."
+        f"Current symbolic backend: `{backend}`"
     )
 
 
@@ -581,6 +569,47 @@ def get_evaluation_records(bundle):
     if not records:
         return pd.DataFrame()
     return pd.DataFrame(records)
+
+
+def get_best_symbolic_configuration(bundle):
+    configurations = get_configurations(bundle)
+    if configurations.empty:
+        return None
+
+    feature_names = get_feature_names(bundle)
+    required_columns = set(feature_names + ["Y1", "Configuration ID"])
+    if not required_columns.issubset(configurations.columns):
+        return None
+
+    feature_frame = configurations[feature_names].copy()
+    predictions = predict_all_models(bundle, feature_frame, include_symbolic_proxy=True)
+    if not predictions or "Symbolic Regression" not in predictions:
+        return None
+
+    actual = configurations["Y1"].to_numpy(dtype=float)
+    symbolic_pred = np.asarray(predictions["Symbolic Regression"], dtype=float)
+    symbolic_error = np.abs(symbolic_pred - actual)
+
+    other_errors = []
+    for model_name, values in predictions.items():
+        if model_name == "Symbolic Regression":
+            continue
+        other_errors.append(np.abs(np.asarray(values, dtype=float) - actual))
+
+    if other_errors:
+        stacked_other_errors = np.vstack(other_errors)
+        symbolic_best_mask = symbolic_error <= stacked_other_errors.min(axis=0)
+    else:
+        symbolic_best_mask = np.ones_like(symbolic_error, dtype=bool)
+
+    candidate_indices = np.where(symbolic_best_mask)[0]
+    if len(candidate_indices) == 0:
+        candidate_indices = np.arange(len(configurations))
+
+    best_index = candidate_indices[np.argmin(symbolic_error[candidate_indices])]
+    best_row = configurations.iloc[int(best_index)].to_dict()
+    best_row["Symbolic Abs Error"] = float(symbolic_error[int(best_index)])
+    return best_row
 
 
 def coerce_to_valid_option(options, value):
@@ -821,6 +850,37 @@ def plot_metrics_radar(traditional_results, symbolic_results):
     st.plotly_chart(fig, use_container_width=True)
 
 
+def plot_complexity_loss_curve(bundle):
+    symbolic_model = bundle.get("models", {}).get("Symbolic Regression")
+    equations = getattr(symbolic_model, "equations_", None)
+    if equations is None:
+        return
+
+    equations_df = pd.DataFrame(equations).copy()
+    if equations_df.empty or "complexity" not in equations_df.columns or "loss" not in equations_df.columns:
+        return
+
+    equations_df["complexity"] = pd.to_numeric(equations_df["complexity"], errors="coerce")
+    equations_df["loss"] = pd.to_numeric(equations_df["loss"], errors="coerce")
+    equations_df = equations_df.dropna(subset=["complexity", "loss"]).sort_values("complexity")
+    if equations_df.empty:
+        return
+
+    fig = px.line(
+        equations_df,
+        x="complexity",
+        y="loss",
+        markers=True,
+        title="Complexity vs Loss Curve",
+    )
+    fig.update_traces(
+        line=dict(color=MODEL_COLORS["Symbolic Regression"], width=4),
+        marker=dict(size=9, color=MODEL_COLORS["Symbolic Regression"]),
+    )
+    finalize_figure(fig, height=430)
+    st.plotly_chart(fig, use_container_width=True)
+
+
 def plot_visualization(bundle, feature_values):
     feature_names = get_feature_names(bundle)
     feature_ranges = get_feature_ranges(bundle, feature_names)
@@ -929,17 +989,6 @@ def plot_visualization(bundle, feature_values):
     finalize_figure(fig_surface, height=620)
     st.plotly_chart(fig_surface, use_container_width=True)
 
-    fig_contour = go.Figure(
-        data=go.Contour(z=grid_pred, x=roof_grid[0], y=orientation_range)
-    )
-    fig_contour.update_layout(
-        title="Heating Load Contour Map",
-        xaxis_title="Roof Area (X4)",
-        yaxis_title="Orientation (X6)",
-    )
-    finalize_figure(fig_contour, height=500)
-    st.plotly_chart(fig_contour, use_container_width=True)
-
 
 def plot_optimization(bundle, feature_values):
     feature_names = get_feature_names(bundle)
@@ -1040,15 +1089,14 @@ if not bundle.get("metrics"):
         "Showing legacy summary metrics because the current bundle does not contain exported evaluation metadata yet."
     )
 
-section = st.sidebar.radio(
-    "Select Section",
-    ["Results Comparison", "Visualization", "Optimization", "Prediction"],
+page_results, page_visualization, page_optimization, page_prediction = st.tabs(
+    ["Results Comparison", "Visualization", "Optimization", "Prediction"]
 )
 
-if section == "Results Comparison":
+with page_results:
     render_section_banner(
-        "Model Performance Results",
-        "Use this view to tell the full story: baseline accuracy, symbolic interpretability, and the tradeoff profile that makes the framework compelling for demos and submissions.",
+        "Results Overview",
+        "Compare model accuracy, errors, and the final symbolic equation.",
     )
     render_kpi_cards(traditional_results, symbolic_results)
     tab_summary, tab_charts, tab_equation = st.tabs(["Scorecards", "Comparative Charts", "Equation"])
@@ -1097,7 +1145,7 @@ if section == "Results Comparison":
             )
             finalize_figure(fig_error, height=460)
             st.plotly_chart(fig_error, use_container_width=True)
-            plot_metrics_radar(traditional_results, symbolic_results)
+            plot_complexity_loss_curve(bundle)
 
     with tab_equation:
         equation_text = bundle.get("symbolic_equation_latex") or bundle.get("symbolic_equation_text")
@@ -1108,10 +1156,10 @@ if section == "Results Comparison":
             "Presentation note: pair this equation with the comparative charts to show not just performance, but also interpretability and deployability."
         )
 
-elif section == "Visualization":
+with page_visualization:
     render_section_banner(
-        "Model Behavior Studio",
-        "Explore how heating load changes across the design space and where symbolic regression diverges from traditional models. This is the strongest section for live demos.",
+        "Visualization",
+        "Explore how heating load changes across the design space.",
     )
     viz_input_tab, viz_chart_tab = st.tabs(["Controls", "Visual Analytics"])
     with viz_input_tab:
@@ -1140,10 +1188,10 @@ elif section == "Visualization":
             finalize_figure(fig_feat, height=430)
             st.plotly_chart(fig_feat, use_container_width=True)
 
-elif section == "Optimization":
+with page_optimization:
     render_section_banner(
-        "Optimization Explorer",
-        "Show stakeholders how each model recommends different roof-area choices and how symbolic regression supports interpretable design search.",
+        "Optimization",
+        "Inspect how roof area affects heating load across models.",
     )
     opt_input_tab, opt_chart_tab = st.tabs(["Scenario Setup", "Optimization Views"])
     with opt_input_tab:
@@ -1151,12 +1199,13 @@ elif section == "Optimization":
     with opt_chart_tab:
         plot_optimization(bundle, current_input)
 
-elif section == "Prediction":
+with page_prediction:
     render_section_banner(
-        "Prediction Console",
-        "Use dataset-backed configurations for stable demos, inspect residuals against actual values, and compare how the deployed models behave on the same building design.",
+        "Prediction",
+        "Compare predictions for a selected building configuration.",
     )
     configurations = get_configurations(bundle)
+    recommended_symbolic_config = get_best_symbolic_configuration(bundle)
     pred_setup_tab, pred_results_tab = st.tabs(["Scenario Selection", "Prediction Views"])
     with pred_setup_tab:
         input_mode = st.radio(
@@ -1172,7 +1221,26 @@ elif section == "Prediction":
                 f"{row['Configuration ID']} | Y1={row['Y1']:.2f} | X1={row['X1']}, X2={row['X2']}, X4={row['X4']}, X6={row['X6']}"
                 for _, row in configurations.iterrows()
             ]
-            selected_config_label = st.selectbox("Choose a valid building configuration", config_options)
+            default_index = 0
+            if recommended_symbolic_config is not None:
+                recommended_label = (
+                    f"{recommended_symbolic_config['Configuration ID']} | "
+                    f"Y1={recommended_symbolic_config['Y1']:.2f} | "
+                    f"X1={recommended_symbolic_config['X1']}, X2={recommended_symbolic_config['X2']}, "
+                    f"X4={recommended_symbolic_config['X4']}, X6={recommended_symbolic_config['X6']}"
+                )
+                if recommended_label in config_options:
+                    default_index = config_options.index(recommended_label)
+                st.success(
+                    "Recommended symbolic configuration: "
+                    f"{recommended_symbolic_config['Configuration ID']} "
+                    f"(Symbolic Abs Error = {recommended_symbolic_config['Symbolic Abs Error']:.2f})"
+                )
+            selected_config_label = st.selectbox(
+                "Choose a valid building configuration",
+                config_options,
+                index=default_index,
+            )
             selected_index = config_options.index(selected_config_label)
             selected_row = configurations.iloc[selected_index]
             initial_values = {
