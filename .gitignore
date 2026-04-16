@@ -1,4 +1,5 @@
 venv/
+research/
 .vscode/
 .julia_depot/
 __pycache__/
